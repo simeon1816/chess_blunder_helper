@@ -1,0 +1,36 @@
+{
+  "manifest_version": 3,
+  "name": "Chess Trainer",
+  "version": "1.2",
+  "description": "Stockfish analysis overlay for chess.com and lichess — eval bar and move checker",
+  "icons": {
+    "16":  "icons/icon.svg",
+    "48":  "icons/icon.svg",
+    "128": "icons/icon.svg"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://www.chess.com/*"],
+      "js": ["content/chesscom_main.js"],
+      "world": "MAIN",
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["*://www.chess.com/*", "*://lichess.org/*"],
+      "js": [
+        "lib/chess.min.js",
+        "content/engine.js",
+        "content/board_watcher.js",
+        "content/sidebar.js"
+      ],
+      "css": ["content/sidebar.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["lib/stockfish.js"],
+      "matches": ["*://www.chess.com/*", "*://lichess.org/*"]
+    }
+  ]
+}
